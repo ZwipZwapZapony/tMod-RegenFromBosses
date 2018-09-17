@@ -80,7 +80,7 @@ namespace RegenFromBosses
 			(NPC.downedMoonlord       ? 1f : 0f))  //Moon Lord
 			*lifeRegenFromBosses_perBoss;
 			if (modLoadedAntiaris) //If Antiaris is loaded
-				ModSupportCalamityMod(); //Do some Antiaris boss check stuff... in a separate function to avoid crashes for people who don't have Antiaris loaded
+				ModSupportAntiaris(); //Do some Antiaris boss check stuff... in a separate function to avoid crashes for people who don't have Antiaris loaded
 			if (modLoadedCalamityMod) //And do the same for Calamity Mod
 				ModSupportCalamityMod();
 			if (modLoadedOcram) //And also for Ocram 'n Stuff

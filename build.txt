@@ -4,5 +4,5 @@ displayName = Regen From Bosses
 homepage = https://forums.terraria.org/index.php?threads/regen-from-bosses.72596/
 includeSource = true
 languageVersion = 6
-version = 1.0
+version = 1.0.0.1
 weakReferences = Antiaris@0.1.0.11, CalamityMod@1.3.4.1, Ocram@1.0.1.9, ThoriumMod@1.5.0.4

@@ -16,6 +16,9 @@ Multiplayer compatibility/synchronization is currently unknown.
 
 Changelog:
 
+Version 1.0.0.1:
+- Hotfix for Antiaris mod support checking Calamity Mod's bosses instead, causing double-regen from Calamity Mod or a crash if Calamity Mod is not loaded when Antiaris is
+
 Version 1.0:
 - Initial release
 - Added full support for Antiaris and Ocram 'n Stuff
