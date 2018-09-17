@@ -1,0 +1,22 @@
+Regen From Bosses makes your character regenerate some life per second, based on the amount of bosses that you have slain at least once in a world.
+
+This mod exists to make Squire's Great Helm and Valhalla Knight's Breastplate less essential for people who don't want to use consumable health potions, although this mod does stack with those items.
+
+While not fully tested, this mod should currently support bosses from the following:
+Vanilla Terraria v1.3.5.2 (Fully supported)
+Antiaris v0.1.0.11 (Fully supported)
+Calamity Mod v1.3.4.1 (~70% supported)
+Ocram 'n Stuff v1.0.1.9 (Fully supported)
+Thorium Mod v1.5.0.4 (All but one boss supported)
+
+"Integration" with the Boss Checklist mod has been considered for wide automatic mod-boss support, but it seems impossible to me at the moment.
+
+Multiplayer compatibility/synchronization is currently unknown.
+
+
+Changelog:
+
+Version 1.0:
+- Initial release
+- Added full support for Antiaris and Ocram 'n Stuff
+- Added partial support for Calamity Mod and Thorium Mod
