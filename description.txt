@@ -3,11 +3,18 @@ Regen From Bosses makes your character regenerate some life per second, based on
 This mod exists to make Squire's Great Helm and Valhalla Knight's Breastplate less essential for people who don't want to use consumable health potions, although this mod does stack with those items.
 
 While not fully tested, this mod should currently support bosses from the following:
-Vanilla Terraria v1.3.5.2 (Fully supported)
-Antiaris v0.1.0.11 (Fully supported)
+Terraria v1.3.5.2
+Example Mod v0.10.1.5
+The Antiaris v0.1.0.11
 Calamity Mod v1.3.4.1 (~70% supported)
-Ocram 'n Stuff v1.0.1.9 (Fully supported)
+Crystilium v11.3.1.5
+Echoes of the Ancients v0.1.1
+Exodus v1.1.0.1
+Ocram 'n Stuff v1.0.1.9
+Pumpking's Mod v1.1.4.1
+Spirit Mod v1.3.4.1 (~80% supported)
 Thorium Mod v1.5.0.4 (All but one boss supported)
+W1K's Mod Redux v1.1.1
 
 "Integration" with the Boss Checklist mod has been considered for wide automatic mod-boss support, but it seems impossible to me at the moment.
 
@@ -16,10 +23,16 @@ Multiplayer compatibility/synchronization is currently unknown.
 
 Changelog:
 
+Version 1.1:
+- Added full support for Crystilium, Echoes of the Ancients, Example Mod, Exodus, Pumpking's Mod, and W1K's Mod Redux
+- Added partial support for Spirit Mod
+- Restructuring of source code
+- Possible multiplayer synchronization improvement, although multiplayer synchronization was unknown before and is still unknown, so whether it's better, worse, or unchanged is unknown
+
 Version 1.0.0.1:
-- Hotfix for Antiaris mod support checking Calamity Mod's bosses instead, causing double-regen from Calamity Mod or a crash if Calamity Mod is not loaded when Antiaris is
+- Hotfix for The Antiaris mod support checking Calamity Mod's bosses instead, causing double-regen from Calamity Mod or a crash if Calamity Mod is not loaded when Antiaris is
 
 Version 1.0:
 - Initial release
-- Added full support for Antiaris and Ocram 'n Stuff
+- Added full support for The Antiaris and Ocram 'n Stuff
 - Added partial support for Calamity Mod and Thorium Mod
