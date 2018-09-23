@@ -9,7 +9,7 @@ The Antiaris v0.1.0.11
 Calamity Mod v1.3.4.1 (~70% supported)
 Crystilium v11.3.1.5
 Echoes of the Ancients v0.1.1
-Exodus v1.1.0.1
+Exodus Mod v1.1.0.1
 Ocram 'n Stuff v1.0.1.9
 Pumpking's Mod v1.1.4.1
 Spirit Mod v1.3.4.1 (~80% supported)
@@ -24,7 +24,7 @@ Multiplayer compatibility/synchronization is currently unknown.
 Changelog:
 
 Version 1.1:
-- Added full support for Crystilium, Echoes of the Ancients, Example Mod, Exodus, Pumpking's Mod, and W1K's Mod Redux
+- Added full support for Crystilium, Echoes of the Ancients, Example Mod, Exodus Mod, Pumpking's Mod, and W1K's Mod Redux
 - Added partial support for Spirit Mod
 - Restructuring of source code
 - Possible multiplayer synchronization improvement, although multiplayer synchronization was unknown before and is still unknown, so whether it's better, worse, or unchanged is unknown

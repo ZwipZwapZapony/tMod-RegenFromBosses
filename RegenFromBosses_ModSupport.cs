@@ -14,7 +14,7 @@ namespace RegenFromBosses
 		static bool modLoadedCalamityMod;         //Calamity Mod
 		static bool modLoadedCrystiliumMod;       //Crystilium
 		static bool modLoadedEchoesoftheAncients; //Echoes of the Ancients
-		static bool modLoadedExodus;              //Exodus
+		static bool modLoadedExodus;              //Exodus Mod
 		static bool modLoadedOcram;               //Ocram 'n Stuff
 		static bool modLoadedPumpking;            //Pumpking's Mod
 		static bool modLoadedSpiritMod;           //Spirit Mod
