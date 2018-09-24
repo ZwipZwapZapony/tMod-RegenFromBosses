@@ -17,6 +17,7 @@ namespace RegenFromBosses
 		static bool modLoadedExodus;              //Exodus Mod
 		static bool modLoadedOcram;               //Ocram 'n Stuff
 		static bool modLoadedPumpking;            //Pumpking's Mod
+		static bool modLoadedRedemption;          //Mod of Redemption
 		static bool modLoadedSpiritMod;           //Spirit Mod
 		static bool modLoadedThoriumMod;          //Thorium Mod
 		//static bool modLoadedTremor;              //Tremor Mod Remastered
@@ -34,6 +35,7 @@ namespace RegenFromBosses
 			modLoadedExodus              = ModLoader.GetMod("Exodus")              != null;
 			modLoadedOcram               = ModLoader.GetMod("Ocram")               != null;
 			modLoadedPumpking            = ModLoader.GetMod("Pumpking")            != null;
+			modLoadedRedemption          = ModLoader.GetMod("Redemption")          != null;
 			modLoadedSpiritMod           = ModLoader.GetMod("SpiritMod")           != null;
 			modLoadedThoriumMod          = ModLoader.GetMod("ThoriumMod")          != null;
 			//modLoadedTremor              = ModLoader.GetMod("Tremor")            != null;
@@ -56,10 +58,12 @@ namespace RegenFromBosses
 				ModSupportEchoesoftheAncients();
 			if (modLoadedExodus)
 				ModSupportExodus();
-			if (modLoadedPumpking)
-				ModSupportPumpking();
 			if (modLoadedOcram)
 				ModSupportOcram();
+			if (modLoadedPumpking)
+				ModSupportPumpking();
+			if (modLoadedRedemption)
+				ModSupportRedemption();
 			if (modLoadedSpiritMod)
 				ModSupportSpiritMod();
 			if (modLoadedThoriumMod)
@@ -165,6 +169,19 @@ namespace RegenFromBosses
 			lifeRegenFromBosses_tempCalc+=(
 			(Pumpking.PumpkingWorld.downedPumpkingHorseman ? 1f : 0f) + //Pumpking Horseman
 			(Pumpking.PumpkingWorld.downedTerraLord        ? 1f : 0f)   //Terra Lord
+			)*lifeRegenFromBosses_perBoss;
+		}
+
+		public static void ModSupportRedemption() //Hardcoded Mod of Redemption boss support
+		{
+			//Main.NewText("Pre-Redemption HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
+			lifeRegenFromBosses_tempCalc+=(
+			(Redemption.RedeWorld.downedTheKeeper       ? 1f : 0f) + //The Keeper
+			(Redemption.RedeWorld.downedXenomiteCrystal ? 1f : 0f) + //Xenomite Crystal
+			(Redemption.RedeWorld.downedInfectedEye     ? 1f : 0f) + //Infected Eye
+			(Redemption.RedeWorld.downedSlayer          ? 1f : 0f) + //King Slayer III
+			(Redemption.RedeWorld.downedVlitch1         ? 1f : 0f) + //Vlitch Cleaver
+			(Redemption.RedeWorld.downedVlitch2         ? 1f : 0f)   //Vlitch Gigipede
 			)*lifeRegenFromBosses_perBoss;
 		}
 

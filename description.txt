@@ -12,6 +12,7 @@ Echoes of the Ancients v0.1.1
 Exodus Mod v1.1.0.1
 Ocram 'n Stuff v1.0.1.9
 Pumpking's Mod v1.1.4.1
+Mod of Redemption v0.5.0.1
 Spirit Mod v1.3.4.1 (~80% supported)
 Thorium Mod v1.5.0.4 (All but one boss supported)
 W1K's Mod Redux v1.1.1
@@ -22,6 +23,9 @@ Multiplayer compatibility/synchronization is currently unknown.
 
 
 Changelog:
+
+Version 1.2:
+- Added full support for Mod of Redemption
 
 Version 1.1:
 - Added full support for Crystilium, Echoes of the Ancients, Example Mod, Exodus Mod, Pumpking's Mod, and W1K's Mod Redux
