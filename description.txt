@@ -2,6 +2,8 @@ Regen From Bosses makes your character regenerate some life per second, based on
 
 This mod exists to make Squire's Great Helm and Valhalla Knight's Breastplate less essential for people who don't want to use consumable health potions, although this mod does stack with those items.
 
+This mod has a configuration file, which can be edited with a text editor, at -/Terraria/ModLoader/Mod Configs/RegenFromBosses.json
+
 While not fully tested, this mod should currently support bosses from the following:
 Terraria v1.3.5.2
 Example Mod v0.10.1.5
@@ -12,7 +14,7 @@ Echoes of the Ancients v0.1.1
 Exodus Mod v1.1.0.1
 Ocram 'n Stuff v1.0.1.9
 Pumpking's Mod v1.1.4.1
-Mod of Redemption v0.5.0.1
+Mod of Redemption v0.5.4
 Spirit Mod v1.3.4.1 (~80% supported)
 Thorium Mod v1.5.0.4 (All but one boss supported)
 W1K's Mod Redux v1.1.1
@@ -24,13 +26,23 @@ Multiplayer compatibility/synchronization is currently unknown.
 
 Changelog:
 
+Version 2.0:
+- Life regeneration is now based on the percentage of bosses that have been slain
+- (This means that you won't get a higher maximum regeneration by using lots of boss-adding mods)
+- The maximum regeneration amount can be adjusted in the configuration file: -/Terraria/ModLoader/Mod Configs/RegenFromBosses.json
+- The default is up to 10 life per second (which is 20 in the config)
+- (The previous maximum from vanilla Terraria's bosses was 7 per second, so this is a slight buff if no more than 6 mod bosses are also added, but a nerf if so)
+- Partial rewrite and more restructuring of the source code
+- Some "debug" stuff is now displayed when calculating the regeneration if Modder's Toolkit is loaded
+- In theory, multiplayer synchronization has been improved much more, but it's still unknown whether it works or not in practice
+
 Version 1.2:
 - Added full support for Mod of Redemption
 
 Version 1.1:
 - Added full support for Crystilium, Echoes of the Ancients, Example Mod, Exodus Mod, Pumpking's Mod, and W1K's Mod Redux
 - Added partial support for Spirit Mod
-- Restructuring of source code
+- Restructuring of the source code
 - Possible multiplayer synchronization improvement, although multiplayer synchronization was unknown before and is still unknown, so whether it's better, worse, or unchanged is unknown
 
 Version 1.0.0.1:

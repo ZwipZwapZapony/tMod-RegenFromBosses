@@ -1,7 +1,12 @@
-using System.IO; //For multiplayer synchronization(?)
-using System.Linq; //For C#6 compiling
+using System.IO; //For configuration file reading/writing
+using System.Linq; //For C#6 compiling?
 using Terraria;
+using Terraria.IO; //For configuration file reading/writing
 using Terraria.ModLoader;
+
+//This file is for the "main" stuff as well as stuff not handled in other files
+//It defines some of the important variables related to life regeneration,
+//and also handles loading the mod's configuration file
 
 namespace RegenFromBosses
 {
@@ -10,89 +15,68 @@ namespace RegenFromBosses
 		public RegenFromBosses()
 		{
 		}
-		public static int lifeRegenFromBosses=0; //How much life is regenerated per second from slain bosses - Half of this is regenerated per second
-		public static float lifeRegenFromBosses_perBoss=1f; //How much to add to the life regeneration per slain boss...
-		//public static float lifeRegenFromBosses_perMiniBoss=0f; //...per mini-boss...
-		//public static float lifeRegenFromBosses_perEvent=0f; //...and per event
-		//public static int lifeRegenFromBosses_max=40; //Maximum life regeneration from this mod
-		public static float lifeRegenFromBosses_tempCalc=0f; //Temporary life regeneration calculation, which is then turned from a float to an integer once calculation is done
+		public static int regenLife=0; //How much life is regenerated per second from slain bosses - Half of this is regenerated per second
 
-		//public static int manaRegenFromBosses=0; //Same as life above, but for mana
-		//public static float manaRegenFromBosses_perBoss=0f; //How much mana regeneration per slain boss...
-		//public static float manaRegenFromBosses_perMiniBoss=0f; //...per mini-boss...
-		//public static float manaRegenFromBosses_perEvent=0f; //...and per event
-		//public static int manaRegenFromBosses_max=40; //Maximum mana regeneration from this mod
-		//public static float manaRegenFromBosses_tempCalc=0f; //Temporary mana regeneration calculation
+		public static int configLifeFromBosses=20; //The maximum health regeneration obtainable by slaying all bosses...
+		//public static int configLifeFromMiniBosses=0; //...mini-bosses...
+		//public static int configLifeFromEvents=0; //...and events
+		static Preferences configFile=new Preferences(Path.Combine(Main.SavePath,"Mod Configs","RegenFromBosses.json")); //The configuration file handle thingie
 
-		public static bool calculateRegenFromBosses=false; //Whether or not to re-calculate the regeneration amount
+		public static int tempSlainBosses; //Amount of bosses currently slain
+		public static int tempCountBosses; //Amount of bosses in total, both slain and un-slain
+		//public static int tempSlainMiniBosses; //Slain mini-bosses
+		//public static int tempCountMiniBosses; //Amount of mini-bosses
+		//public static int tempSlainEvents; //Slain mini-bosses
+		//public static int tempCountEvents; //Amount of mini-bosses
 
-		//The below function calculates how much life and mana regeneration should be given to players, based on the amount of slain bosses/mini-bosses/events
-		//It resets the life and mana regeneration variables, iterates through everything in Boss Checklist's list (except not yet), checks if something has been slain, -
-		//- checks what type it is (boss/mini-boss/event) (except not yet), and increases the life and mana regeneration variables based on the per-boss/-mini-boss/-event variables
-		public static void CalculateRegen()
+		public static bool calculateRegen=false; //Whether or not to re-calculate the regeneration amount
+
+
+		//static bool modLoadedBossChecklist;  //Automatic high mod compatibility using Boss Checklist (except not yet)
+		static bool modLoadedModdersToolkit; //Display some debug text if Modder's Toolkit is loaded
+
+		public override void Load() //This gets run when the mod is first loaded
 		{
-			lifeRegenFromBosses_tempCalc=0;
-			//manaRegenFromBosses_tempCalc=0;
-			//Main.NewText("Old HP/S: " + ((float)(RegenFromBosses.lifeRegenFromBosses)/2)); //Debug stuff
+			//modLoadedBossChecklist  = ModLoader.GetMod("BossChecklist")  != null; //Automatic high mod compatibility using Boss Checklist (except not yet)
+			modLoadedModdersToolkit = ModLoader.GetMod("ModdersToolkit") != null; //Display some debug text if Modder's Toolkit is loaded
+			//if (!modLoadedBossChecklist) //If Boss Checklist is not loaded
+				Load__HardcodedModSupport(); //Load other hardcoded mods - See the RegenFromBosses_ModSupport.cs file
 
-			/*if (modLoadedBossChecklist) //If Boss Checklist is loaded, use that for high mod compatibility
+			//Now, for all of the scary configuration file support
+			if (configFile.Load()) //If the configuration file is loaded successfully
 			{
-				//The below is currently(?) impossible(?), as Boss Checklist doesn't seem to have a way for other mods to check the list's beaten bosses and such
-				foreach (BossInfo boss in BossChecklist.bossTracker.allBosses)
-				{
-					if (boss.available() && boss.downed())
-					{
-						switch (boss.type)
-						{
-							case BossChecklistType.Boss:
-								lifeRegenFromBosses_tempCalc+=lifeRegenFromBosses_perBoss;
-								manaRegenFromBosses_tempCalc+=manaRegenFromBosses_perBoss;
-								break;
-							case BossChecklistType.MiniBoss:
-								lifeRegenFromBosses_tempCalc+=lifeRegenFromBosses_perMiniBoss;
-								manaRegenFromBosses_tempCalc+=manaRegenFromBosses_perMiniBoss;
-								break;
-							case BossChecklistType.Event:
-								lifeRegenFromBosses_tempCalc+=lifeRegenFromBosses_perEvent;
-								manaRegenFromBosses_tempCalc+=manaRegenFromBosses_perEvent;
-								break;
-						}
-					}
-				}
-				lifeRegenFromBosses=(int)lifeRegenFromBosses_tempCalc;
-				//manaRegenFromBosses=(int)manaRegenFromBosses_tempCalc;
-			}
-			else //If Boss Checklist isn't loaded, use hardcoded boss support
-			/*{*/
-				lifeRegenFromBosses_tempCalc+=( //The "? 1f : 0f" parts below basically convert bools to floats, as you can't add bools together
-				(NPC.downedSlimeKing      ? 1f : 0f) + //Slime King
-				(NPC.downedBoss1          ? 1f : 0f) + //Eye of Cthulhu
-				(NPC.downedBoss2          ? 1f : 0f) + //Eater of Worlds and/or Brain of Cthulhu
-				(NPC.downedQueenBee       ? 1f : 0f) + //Queen Bee
-				(NPC.downedBoss3          ? 1f : 0f) + //Skeletron
-				(Main.hardMode            ? 1f : 0f) + //Wall of Flesh
-				(NPC.downedMechBoss1      ? 1f : 0f) + //The Destroyer
-				(NPC.downedMechBoss2      ? 1f : 0f) + //The Twins
-				(NPC.downedMechBoss3      ? 1f : 0f) + //Skeletron Prime
-				(NPC.downedPlantBoss      ? 1f : 0f) + //Plantera
-				(NPC.downedGolemBoss      ? 1f : 0f) + //Golem
-				(NPC.downedFishron        ? 1f : 0f) + //Duke Fishron
-				(NPC.downedAncientCultist ? 1f : 0f) + //Lunatic Cultist
-				(NPC.downedMoonlord       ? 1f : 0f)   //Moon Lord
-				)*lifeRegenFromBosses_perBoss;
+				if (configFile.Contains("LifeFromBosses")) //If the life regeneration amount from bosses is in the configuration file...
+					configFile.Get("LifeFromBosses",ref configLifeFromBosses); //...load it
+				else
+					configFile.Put("LifeFromBosses",20); //Otherwise, add it to the configuration file
 
-				HardcodedModSupport(); //Handle hardcoded mod boss support - See the RegenFromBosses_ModSupport.cs file
-			/*}*/
-			lifeRegenFromBosses=(int)lifeRegenFromBosses_tempCalc; //Finally, set lifeRegenFromBosses to what we calculated
-			//manaRegenFromBosses=(int)manaRegenFromBosses_tempCalc; //And do the same with manaRegenFromBosses
-			//Main.NewText("New HP/S: " + ((float)(RegenFromBosses.lifeRegenFromBosses)/2f)); //Debug stuff
+				//if (configFile.Contains("LifeFromMiniBosses")) //Do the same for mini-bosses...
+					//configFile.Get("LifeFromMiniBosses",ref configLifeFromMiniBosses);
+				//else
+					//configFile.Put("LifeFromMiniBosses",0);
+
+				//if (configFile.Contains("LifeFromEvents")) //...and for events
+					//configFile.Get("LifeFromEvents",ref configLifeFromEvents);
+				//else
+					//configFile.Put("LifeFromEvents",0);
+
+				configFile.Save(); //Finally, save the configuration file with all things in it, in case that some of the above options don't already exist in it
+			}
+			else //If the configuration file didn't load successfully
+			{
+				configFile.Clear(); //Clear the configuration file, just in case...
+				configFile.Put("LifeFromBosses",20); //...add variables for the the life regeneration from bosses...
+				//configFile.Put("LifeFromMiniBosses",0); //...mini-bosses...
+				//configFile.Put("LifeFromEvents",0); //...and events...
+				configFile.Save(); //...and then save the default-values configuration file
+			}
 		}
 
 		public override object Call(params object[] input) //Allow other mods to manually make this mod recalculate the regeneration amount with a Call
 		{
-			if (input[0] == "RegenFromBosses_Calculate")
+			if (input[0]=="CalculateRegen")
 			{
-				calculateRegenFromBosses=true;
+				calculateRegen=true;
 				return true;
 			}
 			else
@@ -101,64 +85,7 @@ namespace RegenFromBosses
 			//But in other cases (such as after clearing an event), I think that the Call usage for other mods is as follows:
 			//Mod RFB = ModLoader.GetMod("RegenFromBosses");
 			//if (RFB != null)
-			//	RFB.Call("RegenFromBosses_Calculate");
-		}
-	}
-
-	public class RegenFromBosses_Player : ModPlayer //Hook into stuff for every player
-	{
-		public override void UpdateLifeRegen() //Regenerate some life and mana!
-		{
-			//Crude check to see if there's something that should prevent life regeneration
-			if (!(player.lifeRegen<0 || player.bleed || player.burned || player.electrified || player.onFire || player.onFire2 || player.onFrostBurn || player.poisoned || player.suffocating || player.venom || (Main.expertMode && player.tongued)))
-				player.lifeRegen+=RegenFromBosses.lifeRegenFromBosses;
-			//if (player.manaRegen>=0)
-				//player.manaRegen+=RegenFromBosses.manaRegenFromBosses;
-		}
-
-		public override void OnRespawn(Player player) //When a player dies and respawns...
-		{
-			RegenFromBosses.calculateRegenFromBosses=true; //...recalculate the regeneration (just as an extra measure to keep the regeneration updated without being too taxing)
-		}
-	}
-
-	public class RegenFromBosses_NPC : GlobalNPC //Hook into stuff for all NPCs
-	{
-		public override void NPCLoot(NPC npc) //When a NPC dies...
-		{
-			if (npc.boss) //...if the NPC is an enemy boss...
-				RegenFromBosses.calculateRegenFromBosses=true; //...recalculate the regeneration
-		}
-	}
-
-	public class RegenFromBosses_World : ModWorld //Hook into stuff for the world
-	{
-		public override void Initialize() //When a world is loaded...
-		{
-			RegenFromBosses.lifeRegenFromBosses=0; //...reset the life regeneration amount...
-			//manaRegenFromBosses=0; //...and the mana regeneration amount...
-			RegenFromBosses.calculateRegenFromBosses=true; //...and then recalculate the regeneration (so that it matches the given world's defeated bosses/mini-bosses/events)
-		}
-
-		public override void PostUpdate() //At the end of every frame...
-		{
-			if (RegenFromBosses.calculateRegenFromBosses==true) //...if regeneration is to be recalculated...
-			{
-				RegenFromBosses.CalculateRegen(); //...recalculate it...
-				RegenFromBosses.calculateRegenFromBosses=false; //...and make sure that we don't recalculate it the next frame
-			}
-		}
-
-		public override void NetSend(BinaryWriter writer) //I don't know, can't test multiplayer... But the server side of when a client joins a server?
-		{
-			writer.Write(RegenFromBosses.lifeRegenFromBosses); //Hopefully send the current life regeneration variable value to the new client?
-			//writer.Write(RegenFromBosses.manaRegenFromBosses); //And do the same for mana
-		}
-
-		public override void NetReceive(BinaryReader reader) //I don't know, can't test multiplayer... But the client side of when a client joins a server?
-		{
-			RegenFromBosses.lifeRegenFromBosses = reader.ReadInt32(); //Hopefully receive the current life regeneration variable value from the server?
-			//RegenFromBosses.manaRegenFromBosses = reader.ReadInt32(); //And do the same for mana
+			//	RFB.Call("CalculateRegen");
 		}
 	}
 }

@@ -1,14 +1,14 @@
-using System.Linq; //For C#6 compiling
 using Terraria;
 using Terraria.ModLoader;
+
+//This file handles hardcoded support for mods' bosses
+//If Boss Checklist is loaded, nothing in this file will do anything important
 
 namespace RegenFromBosses
 {
 	public partial class RegenFromBosses : Mod
 	{
-		//static bool modLoadedBossChecklist; //Automatic high mod compatibility using Boss Checklist (except not yet)
-		//static int  modBossChecklist;       //Handle for the Boss Checklist mod (except not yet)
-		//Below is a lot of hardcoded mod boss support
+		//Below are some variables that are false if a given mod is not loaded, or true if it is
 		static bool modLoadedExampleMod;          //Example Mod
 		static bool modLoadedAntiaris;            //The Antiaris
 		static bool modLoadedCalamityMod;         //Calamity Mod
@@ -23,11 +23,9 @@ namespace RegenFromBosses
 		//static bool modLoadedTremor;              //Tremor Mod Remastered
 		static bool modLoadedW1KModRedux;         //W1K's Mod Redux
 
-		public override void Load()
+		public static void Load__HardcodedModSupport() //This is run when the mod is loaded, if Boss Checklist is not loaded - Run by Load() in the RegenFromBosses.cs file
 		{
-			//modBossChecklist       = ModLoader.GetMod("BossChecklist"); //Handle for the Boss Checklist mod (except not yet)
-			//modLoadedBossChecklist = modBossChecklist != null;          //Automatic high mod compatibility using Boss Checklist (except not yet)
-			modLoadedExampleMod          = ModLoader.GetMod("ExampleMod")          != null; //Check if Example Mod is loaded, for hardcoded Example Mod boss compatibility if Boss Checklist isn't
+			modLoadedExampleMod          = ModLoader.GetMod("ExampleMod")          != null; //Set the "Example Mod is loaded" variable to whether or not Example Mod is loaded
 			modLoadedAntiaris            = ModLoader.GetMod("Antiaris")            != null;
 			modLoadedCalamityMod         = ModLoader.GetMod("CalamityMod")         != null;
 			modLoadedCrystiliumMod       = ModLoader.GetMod("CrystiliumMod")       != null;
@@ -38,16 +36,16 @@ namespace RegenFromBosses
 			modLoadedRedemption          = ModLoader.GetMod("Redemption")          != null;
 			modLoadedSpiritMod           = ModLoader.GetMod("SpiritMod")           != null;
 			modLoadedThoriumMod          = ModLoader.GetMod("ThoriumMod")          != null;
-			//modLoadedTremor              = ModLoader.GetMod("Tremor")            != null;
+			//modLoadedTremor              = ModLoader.GetMod("Tremor")              != null;
 			modLoadedW1KModRedux         = ModLoader.GetMod("W1KModRedux")         != null;
 		}
 
-		//The below function handles hardcoded mod boss support, which is used if Boss Checklist isn't loaded
+		//The below method(/"function") handles hardcoded mod boss support, which is used if Boss Checklist isn't loaded
 		//(Except that this mod can't load Boss Checklist correctly yet, so all mod boss supported is hardcoded in any case)
 		public static void HardcodedModSupport()
 		{
 			if (modLoadedExampleMod) //If Example Mod is loaded...
-				ModSupportExampleMod(); //...do some Example Mod boss check stuff, in a separate function to avoid crashes for people who don't have Example Mod loaded
+				ModSupportExampleMod(); //...do some Example Mod boss check stuff, in a separate method to avoid crashes for people who don't have Example Mod loaded
 			if (modLoadedAntiaris)
 				ModSupportAntiaris();
 			if (modLoadedCalamityMod)
@@ -74,193 +72,196 @@ namespace RegenFromBosses
 				ModSupportW1KModRedux();
 		}
 
-		public static void ModSupportExampleMod() //Hardcoded Example Mod boss support
+		public static void ModSupportExampleMod() //Example Mod
 		{
-			//Main.NewText("Pre-Example Mod HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			//Let's check which bosses have been slain, and let's increase the regeneration amount appropriately
-			lifeRegenFromBosses_tempCalc+=( //The "? 1f : 0f" parts below basically convert bools to floats, as you can't add bools together
-			(ExampleMod.ExampleWorld.downedAbomination  ? 1f : 0f) + //Abomination
-			(ExampleMod.ExampleWorld.downedPuritySpirit ? 1f : 0f)   //Purity Spirit
-			)*lifeRegenFromBosses_perBoss; //Make sure to multiply it by however much health per second you should get per boss
+			//Let's check which bosses have been slain, and increase the amount of slain bosses appropriately
+			tempSlainBosses+=( //The "? 1 : 0" parts below basically convert bools to ints, as you can't add bools together
+			(ExampleMod.ExampleWorld.downedAbomination  ? 1 : 0) + //Abomination
+			(ExampleMod.ExampleWorld.downedPuritySpirit ? 1 : 0)   //Purity Spirit
+			);
+			tempCountBosses+=2; //Example Mod has 2 bosses
 		}
 
-		public static void ModSupportAntiaris() //Hardcoded Antiaris boss support
+		public static void ModSupportAntiaris() //The Antiaris
 		{
-			//Main.NewText("Pre-Antiaris HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(Antiaris.AntiarisWorld.DownedAntlionQueen ? 1f : 0f) + //Antlion Queen
-			(Antiaris.AntiarisWorld.DownedTowerKeeper  ? 1f : 0f)   //Tower Keeper
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(Antiaris.AntiarisWorld.DownedAntlionQueen ? 1 : 0) + //Antlion Queen
+			(Antiaris.AntiarisWorld.DownedTowerKeeper  ? 1 : 0)   //Tower Keeper
+			);
+			tempCountBosses+=2;
 		}
 
-		public static void ModSupportCalamityMod() //Hardcoded Calamity Mod boss support
+		public static void ModSupportCalamityMod() //Calamity Mod
 		{
-			//Main.NewText("Pre-Calamity HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(CalamityMod.CalamityWorld.downedDesertScourge      ? 1f : 0f) + //Desert Scourge
-			(CalamityMod.CalamityWorld.downedCrabulon           ? 1f : 0f) + //Crabulon
+			tempSlainBosses+=(
+			(CalamityMod.CalamityWorld.downedDesertScourge      ? 1 : 0) + //Desert Scourge
+			(CalamityMod.CalamityWorld.downedCrabulon           ? 1 : 0) + //Crabulon
 			((CalamityMod.CalamityWorld.downedHiveMind ||                    //Hive Mind and/or Perforator
-			CalamityMod.CalamityWorld.downedPerforator)         ? 1f : 0f) + //Hive Mind and/or Perforator
-			(CalamityMod.CalamityWorld.downedSlimeGod           ? 1f : 0f) + //Slime God
-			(CalamityMod.CalamityWorld.downedBrimstoneElemental ? 1f : 0f) + //Brimstone Elemental
-			(CalamityMod.CalamityWorld.downedCryogen            ? 1f : 0f) + //Cryogen
-			(CalamityMod.CalamityWorld.downedAquaticScourge     ? 1f : 0f) + //Aquatic Scourge
-			(CalamityMod.CalamityWorld.downedCalamitas          ? 1f : 0f) + //Calamitas
-			(CalamityMod.CalamityWorld.downedLeviathan          ? 1f : 0f) + //Leviathan
-			(CalamityMod.CalamityWorld.downedAstrageldon        ? 1f : 0f) + //Astrageldon Slime
-			//(CalamityMod.CalamityWorld.downedAstrumDeus???      ? 1f : 0f) + //Astrum Deus
-			(CalamityMod.CalamityWorld.downedPlaguebringer      ? 1f : 0f) + //Plaguebringer Goliath
-			//(CalamityMod.CalamityWorld.downedRavager???         ? 1f : 0f) + //Ravager
-			(CalamityMod.CalamityWorld.downedGuardians          ? 1f : 0f) + //Profaned Guardians
-			(CalamityMod.CalamityWorld.downedProvidence         ? 1f : 0f) + //Providence
-			//(CalamityMod.CalamityWorld.downedCeaselessVoid???   ? 1f : 0f) + //Ceaseless Void
-			//(CalamityMod.CalamityWorld.downedStormWorm???       ? 1f : 0f) + //Storm Weaver
-			//(CalamityMod.CalamityWorld.downedSignus???          ? 1f : 0f) + //Signus
-			(CalamityMod.CalamityWorld.downedPolterghast        ? 1f : 0f) + //Polterghast
-			(CalamityMod.CalamityWorld.downedDoG                ? 1f : 0f) + //Devourer of Gods
-			(CalamityMod.CalamityWorld.downedBumble             ? 1f : 0f) + //Bumblebirb
-			(CalamityMod.CalamityWorld.downedYharon             ? 1f : 0f)   //Yharon
-			//(CalamityMod.CalamityWorld.downedSupremeCalamitas??? ? 1f : 0f)  //Supreme Calamitas
-			)*lifeRegenFromBosses_perBoss;
+			CalamityMod.CalamityWorld.downedPerforator)         ? 1 : 0) + //Hive Mind and/or Perforator
+			(CalamityMod.CalamityWorld.downedSlimeGod           ? 1 : 0) + //Slime God
+			(CalamityMod.CalamityWorld.downedBrimstoneElemental ? 1 : 0) + //Brimstone Elemental
+			(CalamityMod.CalamityWorld.downedCryogen            ? 1 : 0) + //Cryogen
+			(CalamityMod.CalamityWorld.downedAquaticScourge     ? 1 : 0) + //Aquatic Scourge
+			(CalamityMod.CalamityWorld.downedCalamitas          ? 1 : 0) + //Calamitas
+			(CalamityMod.CalamityWorld.downedLeviathan          ? 1 : 0) + //Leviathan
+			(CalamityMod.CalamityWorld.downedAstrageldon        ? 1 : 0) + //Astrageldon Slime
+			//(CalamityMod.CalamityWorld.downedAstrumDeus???      ? 1 : 0) + //Astrum Deus
+			(CalamityMod.CalamityWorld.downedPlaguebringer      ? 1 : 0) + //Plaguebringer Goliath
+			//(CalamityMod.CalamityWorld.downedRavager???         ? 1 : 0) + //Ravager
+			(CalamityMod.CalamityWorld.downedGuardians          ? 1 : 0) + //Profaned Guardians
+			(CalamityMod.CalamityWorld.downedProvidence         ? 1 : 0) + //Providence
+			//(CalamityMod.CalamityWorld.downedCeaselessVoid???   ? 1 : 0) + //Ceaseless Void
+			//(CalamityMod.CalamityWorld.downedStormWorm???       ? 1 : 0) + //Storm Weaver
+			//(CalamityMod.CalamityWorld.downedSignus???          ? 1 : 0) + //Signus
+			(CalamityMod.CalamityWorld.downedPolterghast        ? 1 : 0) + //Polterghast
+			(CalamityMod.CalamityWorld.downedDoG                ? 1 : 0) + //Devourer of Gods
+			(CalamityMod.CalamityWorld.downedBumble             ? 1 : 0) + //Bumblebirb
+			(CalamityMod.CalamityWorld.downedYharon             ? 1 : 0)   //Yharon
+			//(CalamityMod.CalamityWorld.downedSupremeCalamitas??? ? 1 : 0)  //Supreme Calamitas
+			);
+			//tempCountBosses+=23;
+			tempCountBosses+=17;
 		}
 
-		public static void ModSupportCrystiliumMod() //Hardcoded Crystilium boss support
+		public static void ModSupportCrystiliumMod() //Crystilium
 		{
-			//Main.NewText("Pre-Crystilium HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(CrystiliumMod.CrystalWorld.downedCrystalKing ? 1f : 0f) //Crystal King
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(CrystiliumMod.CrystalWorld.downedCrystalKing ? 1 : 0) //Crystal King
+			);
+			tempCountBosses+=1;
 		}
 
-		public static void ModSupportEchoesoftheAncients() //Hardcoded Echoes of the Ancients boss support
+		public static void ModSupportEchoesoftheAncients() //Echoes of the Ancients
 		{
-			//Main.NewText("Pre-EotA HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(EchoesoftheAncients.AncientWorld.downedWyrms ? 1f : 0f) //Creation and Destruction
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(EchoesoftheAncients.AncientWorld.downedWyrms ? 1 : 0) //Creation and Destruction
+			);
+			tempCountBosses+=1;
 		}
 
-		public static void ModSupportExodus() //Hardcoded Exodus Mod boss support
+		public static void ModSupportExodus() //Exodus Mod
 		{
-			//Main.NewText("Pre-Exodus HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(Exodus.ExodusWorld.downedExodusAbomination   ? 1f : 0f) + //Abomination
-			(Exodus.ExodusWorld.downedExodusEvilBlob      ? 1f : 0f) + //Evil Blob
-			(Exodus.ExodusWorld.downedExodusColossus      ? 1f : 0f) + //Colossus
-			(Exodus.ExodusWorld.downedExodusDesertEmperor ? 1f : 0f) + //Desert Emperor
-			(Exodus.ExodusWorld.downedExodusHivemind      ? 1f : 0f) + //Mindflayer
-			(Exodus.ExodusWorld.downedExodusMaster        ? 1f : 0f) + //Master of Possession
-			(Exodus.ExodusWorld.downedExodusSludgeheart   ? 1f : 0f) + //Sludgeheart
-			(Exodus.ExodusWorld.downedExodusTheAncient    ? 1f : 0f)   //The Ancient
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(Exodus.ExodusWorld.downedExodusAbomination   ? 1 : 0) + //Abomination
+			(Exodus.ExodusWorld.downedExodusEvilBlob      ? 1 : 0) + //Evil Blob
+			(Exodus.ExodusWorld.downedExodusColossus      ? 1 : 0) + //Colossus
+			(Exodus.ExodusWorld.downedExodusDesertEmperor ? 1 : 0) + //Desert Emperor
+			(Exodus.ExodusWorld.downedExodusHivemind      ? 1 : 0) + //Mindflayer
+			(Exodus.ExodusWorld.downedExodusMaster        ? 1 : 0) + //Master of Possession
+			(Exodus.ExodusWorld.downedExodusSludgeheart   ? 1 : 0) + //Sludgeheart
+			(Exodus.ExodusWorld.downedExodusTheAncient    ? 1 : 0)   //The Ancient
+			);
+			tempCountBosses+=8;
 		}
 
-		public static void ModSupportOcram() //Hardcoded Ocram 'n Stuff boss support
+		public static void ModSupportOcram() //Ocram 'n Stuff
 		{
-			//Main.NewText("Pre-Ocram HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(Ocram.OcramWorld.downedOcram ? 1f : 0f) //Ocram
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(Ocram.OcramWorld.downedOcram ? 1 : 0) //Ocram
+			);
+			tempCountBosses+=1;
 		}
 
-		public static void ModSupportPumpking() //Hardcoded Pumpking's Mod boss support
+		public static void ModSupportPumpking() //Pumpking's Mod
 		{
-			//Main.NewText("Pre-Pumpking HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(Pumpking.PumpkingWorld.downedPumpkingHorseman ? 1f : 0f) + //Pumpking Horseman
-			(Pumpking.PumpkingWorld.downedTerraLord        ? 1f : 0f)   //Terra Lord
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(Pumpking.PumpkingWorld.downedPumpkingHorseman ? 1 : 0) + //Pumpking Horseman
+			(Pumpking.PumpkingWorld.downedTerraLord        ? 1 : 0)   //Terra Lord
+			);
+			tempCountBosses+=2;
 		}
 
-		public static void ModSupportRedemption() //Hardcoded Mod of Redemption boss support
+		public static void ModSupportRedemption() //Mod of Redemption
 		{
-			//Main.NewText("Pre-Redemption HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(Redemption.RedeWorld.downedTheKeeper       ? 1f : 0f) + //The Keeper
-			(Redemption.RedeWorld.downedXenomiteCrystal ? 1f : 0f) + //Xenomite Crystal
-			(Redemption.RedeWorld.downedInfectedEye     ? 1f : 0f) + //Infected Eye
-			(Redemption.RedeWorld.downedSlayer          ? 1f : 0f) + //King Slayer III
-			(Redemption.RedeWorld.downedVlitch1         ? 1f : 0f) + //Vlitch Cleaver
-			(Redemption.RedeWorld.downedVlitch2         ? 1f : 0f)   //Vlitch Gigipede
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(Redemption.RedeWorld.downedTheKeeper       ? 1 : 0) + //The Keeper
+			(Redemption.RedeWorld.downedXenomiteCrystal ? 1 : 0) + //Xenomite Crystal
+			(Redemption.RedeWorld.downedInfectedEye     ? 1 : 0) + //Infected Eye
+			(Redemption.RedeWorld.downedSlayer          ? 1 : 0) + //King Slayer III
+			(Redemption.RedeWorld.downedVlitch1         ? 1 : 0) + //Vlitch Cleaver
+			(Redemption.RedeWorld.downedVlitch2         ? 1 : 0)   //Vlitch Gigipede
+			);
+			tempCountBosses+=6;
 		}
 
-		public static void ModSupportSpiritMod() //Hardcoded Spirit Mod boss support
+		public static void ModSupportSpiritMod() //Spirit Mod
 		{
-			//Main.NewText("Pre-Spirit HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(SpiritMod.MyWorld.downedScarabeus        ? 1f : 0f) + //Scarabeus
-			//(SpiritMod.MyWorld.downedVinewrathBane??? ? 1f : 0f) + //Vinewrath Bane
-			(SpiritMod.MyWorld.downedAncientFlier     ? 1f : 0f) + //Ancient Flier
-			(SpiritMod.MyWorld.downedRaider           ? 1f : 0f) + //Starplate Raider???
-			(SpiritMod.MyWorld.downedInfernon         ? 1f : 0f) + //Infernon
-			(SpiritMod.MyWorld.downedDusking          ? 1f : 0f) + //Dusking
-			//(SpiritMod.MyWorld.downedEtherealUmbra??? ? 1f : 0f) + //Ethereal Umbra
-			(SpiritMod.MyWorld.downedIlluminantMaster ? 1f : 0f) + //Illuminant Master
-			(SpiritMod.MyWorld.downedAtlas            ? 1f : 0f) + //Atlas
-			(SpiritMod.MyWorld.downedOverseer         ? 1f : 0f)   //Overseer
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(SpiritMod.MyWorld.downedScarabeus        ? 1 : 0) + //Scarabeus
+			//(SpiritMod.MyWorld.downedVinewrathBane??? ? 1 : 0) + //Vinewrath Bane
+			(SpiritMod.MyWorld.downedAncientFlier     ? 1 : 0) + //Ancient Flier
+			(SpiritMod.MyWorld.downedRaider           ? 1 : 0) + //Starplate Raider???
+			(SpiritMod.MyWorld.downedInfernon         ? 1 : 0) + //Infernon
+			(SpiritMod.MyWorld.downedDusking          ? 1 : 0) + //Dusking
+			//(SpiritMod.MyWorld.downedEtherealUmbra??? ? 1 : 0) + //Ethereal Umbra
+			(SpiritMod.MyWorld.downedIlluminantMaster ? 1 : 0) + //Illuminant Master
+			(SpiritMod.MyWorld.downedAtlas            ? 1 : 0) + //Atlas
+			(SpiritMod.MyWorld.downedOverseer         ? 1 : 0)   //Overseer
+			);
+			//tempCountBosses+=10;
+			tempCountBosses+=8;
 		}
 
-		public static void ModSupportThoriumMod() //Hardcoded Thorium Mod boss support
+		public static void ModSupportThoriumMod() //Thorium Mod
 		{
-			//Main.NewText("Pre-Thorium HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(ThoriumMod.ThoriumWorld.downedThunderBird    ? 1f : 0f) + //The Grand Thunder Bird
-			(ThoriumMod.ThoriumWorld.downedJelly          ? 1f : 0f) + //The Queen Jellyfish
-			//(ThoriumMod.ThoriumWorld.downedViscount???    ? 1f : 0f) + //Viscount
-			(ThoriumMod.ThoriumWorld.downedStorm          ? 1f : 0f) + //Granite Energy Storm
-			(ThoriumMod.ThoriumWorld.downedChampion       ? 1f : 0f) + //The Buried Champion
-			(ThoriumMod.ThoriumWorld.downedScout          ? 1f : 0f) + //The Star Scouter
-			(ThoriumMod.ThoriumWorld.downedStrider        ? 1f : 0f) + //Borean Strider
-			(ThoriumMod.ThoriumWorld.downedFallenBeholder ? 1f : 0f) + //Coznix, the Fallen Beholder
-			(ThoriumMod.ThoriumWorld.downedLich           ? 1f : 0f) + //The Lich
-			(ThoriumMod.ThoriumWorld.downedDepthBoss      ? 1f : 0f) + //Abyssion, The Forgotten One
-			(ThoriumMod.ThoriumWorld.downedRealityBreaker ? 1f : 0f)   //The Ragnarok
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(ThoriumMod.ThoriumWorld.downedThunderBird    ? 1 : 0) + //The Grand Thunder Bird
+			(ThoriumMod.ThoriumWorld.downedJelly          ? 1 : 0) + //The Queen Jellyfish
+			//(ThoriumMod.ThoriumWorld.downedViscount???    ? 1 : 0) + //Viscount
+			(ThoriumMod.ThoriumWorld.downedStorm          ? 1 : 0) + //Granite Energy Storm
+			(ThoriumMod.ThoriumWorld.downedChampion       ? 1 : 0) + //The Buried Champion
+			(ThoriumMod.ThoriumWorld.downedScout          ? 1 : 0) + //The Star Scouter
+			(ThoriumMod.ThoriumWorld.downedStrider        ? 1 : 0) + //Borean Strider
+			(ThoriumMod.ThoriumWorld.downedFallenBeholder ? 1 : 0) + //Coznix, the Fallen Beholder
+			(ThoriumMod.ThoriumWorld.downedLich           ? 1 : 0) + //The Lich
+			(ThoriumMod.ThoriumWorld.downedDepthBoss      ? 1 : 0) + //Abyssion, The Forgotten One
+			(ThoriumMod.ThoriumWorld.downedRealityBreaker ? 1 : 0)   //The Ragnarok
+			);
+			//tempCountBosses+=11;
+			tempCountBosses+=10;
 		}
 
 		//I don't know what the array values for each boss are, and I don't want to just guess, so this is commented out for now
-		/*public static void ModSupportTremor() //Hardcoded Tremor boss support
+		/*public static void ModSupportTremor() //Tremor Mod Remastered
 		{
-			//Main.NewText("Pre-Tremor HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Rukh
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Tiki Totem
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Evil Corn
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Storm Jellyfish
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Ancient Dragon
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Fungus Beetle
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Heater of Worlds
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Alchemaster
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Motherboard
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Pixie Queen
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Wall of Shadows
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Frost King
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Cog Lord
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Mothership and Cyber King
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //The Dark Emperor
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Brutallisk
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //Space Whale
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f) + //The Trinity
-			(Tremor.TremorWorld.downedBoss[???] ? 1f : 0f)   //Andas
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Rukh
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Tiki Totem
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Evil Corn
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Storm Jellyfish
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Ancient Dragon
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Fungus Beetle
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Heater of Worlds
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Alchemaster
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Motherboard
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Pixie Queen
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Wall of Shadows
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Frost King
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Cog Lord
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Mothership and Cyber King
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //The Dark Emperor
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Brutallisk
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Space Whale
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //The Trinity
+			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0)   //Andas
+			);
+			tempCountBosses+=19;
 		}*/
 
-		public static void ModSupportW1KModRedux() //Hardcoded W1K's Mod Redux boss support
+		public static void ModSupportW1KModRedux() //W1K's Mod Redux
 		{
-			//Main.NewText("Pre-W1K HP/S: " + lifeRegenFromBosses_tempCalc/2f); //Debug stuff
-			lifeRegenFromBosses_tempCalc+=(
-			(W1KModRedux.MWorld.downedKutKu    ? 1f : 0f) + //Yian Kut-Ku
-			(W1KModRedux.MWorld.downedIvy      ? 1f : 0f) + //Ivy Plant
-			(W1KModRedux.MWorld.downedAquatix  ? 1f : 0f) + //Aquatix
-			(W1KModRedux.MWorld.downedArborix  ? 1f : 0f) + //Arborix
-			(W1KModRedux.MWorld.downedArdorix  ? 1f : 0f) + //Ardorix
-			(W1KModRedux.MWorld.downedRidley   ? 1f : 0f) + //Ridley
-			(W1KModRedux.MWorld.downedRathalos ? 1f : 0f) + //Rathalos
-			(W1KModRedux.MWorld.downedOkiku    ? 1f : 0f) + //Okiku
-			(W1KModRedux.MWorld.downedDeath    ? 1f : 0f)   //Death
-			)*lifeRegenFromBosses_perBoss;
+			tempSlainBosses+=(
+			(W1KModRedux.MWorld.downedKutKu    ? 1 : 0) + //Yian Kut-Ku
+			(W1KModRedux.MWorld.downedIvy      ? 1 : 0) + //Ivy Plant
+			(W1KModRedux.MWorld.downedAquatix  ? 1 : 0) + //Aquatix
+			(W1KModRedux.MWorld.downedArborix  ? 1 : 0) + //Arborix
+			(W1KModRedux.MWorld.downedArdorix  ? 1 : 0) + //Ardorix
+			(W1KModRedux.MWorld.downedRidley   ? 1 : 0) + //Ridley
+			(W1KModRedux.MWorld.downedRathalos ? 1 : 0) + //Rathalos
+			(W1KModRedux.MWorld.downedOkiku    ? 1 : 0) + //Okiku
+			(W1KModRedux.MWorld.downedDeath    ? 1 : 0)   //Death
+			);
+			tempCountBosses+=9;
 		}
 	}
 }
