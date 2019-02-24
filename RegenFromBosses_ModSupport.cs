@@ -11,7 +11,7 @@ namespace RegenFromBosses
 		//Below are some variables that are false if a given mod is not loaded, or true if it is
 		static bool modLoadedExampleMod;          //Example Mod
 		static bool modLoadedAntiaris;            //The Antiaris
-		static bool modLoadedCalamityMod;         //Calamity Mod
+		static bool modLoadedCalamityMod;         //Calamity Mod (No Calamity Music)
 		static bool modLoadedCrystiliumMod;       //Crystilium
 		static bool modLoadedEchoesoftheAncients; //Echoes of the Ancients
 		static bool modLoadedExodus;              //Exodus Mod
@@ -20,10 +20,11 @@ namespace RegenFromBosses
 		static bool modLoadedRedemption;          //Mod of Redemption
 		static bool modLoadedSpiritMod;           //Spirit Mod
 		static bool modLoadedThoriumMod;          //Thorium Mod
-		//static bool modLoadedTremor;              //Tremor Mod Remastered
+		static bool modLoadedTremor;              //Tremor Mod Remastered
+		static bool modLoadedVaria;               //Varia (Open Beta)
 		static bool modLoadedW1KModRedux;         //W1K's Mod Redux
 
-		public static void Load__HardcodedModSupport() //This is run when the mod is loaded, if Boss Checklist is not loaded - Run by Load() in the RegenFromBosses.cs file
+		public static void Load__HardcodedModSupport() //This is run when the mod is loaded, if Boss Checklist is not loaded (except not yet) - Run by Load() in the RegenFromBosses.cs file
 		{
 			modLoadedExampleMod          = ModLoader.GetMod("ExampleMod")          != null; //Set the "Example Mod is loaded" variable to whether or not Example Mod is loaded
 			modLoadedAntiaris            = ModLoader.GetMod("Antiaris")            != null;
@@ -36,7 +37,8 @@ namespace RegenFromBosses
 			modLoadedRedemption          = ModLoader.GetMod("Redemption")          != null;
 			modLoadedSpiritMod           = ModLoader.GetMod("SpiritMod")           != null;
 			modLoadedThoriumMod          = ModLoader.GetMod("ThoriumMod")          != null;
-			//modLoadedTremor              = ModLoader.GetMod("Tremor")              != null;
+			modLoadedTremor              = ModLoader.GetMod("Tremor")              != null;
+			modLoadedVaria               = ModLoader.GetMod("Varia")               != null;
 			modLoadedW1KModRedux         = ModLoader.GetMod("W1KModRedux")         != null;
 		}
 
@@ -66,8 +68,10 @@ namespace RegenFromBosses
 				ModSupportSpiritMod();
 			if (modLoadedThoriumMod)
 				ModSupportThoriumMod();
-			//if (modLoadedTremor)
-				//ModSupportTremor();
+			if (modLoadedTremor)
+				ModSupportTremor();
+			if (modLoadedVaria)
+				ModSupportVaria();
 			if (modLoadedW1KModRedux)
 				ModSupportW1KModRedux();
 		}
@@ -79,7 +83,7 @@ namespace RegenFromBosses
 			(ExampleMod.ExampleWorld.downedAbomination  ? 1 : 0) + //Abomination
 			(ExampleMod.ExampleWorld.downedPuritySpirit ? 1 : 0)   //Purity Spirit
 			);
-			tempCountBosses+=2; //Example Mod has 2 bosses
+			tempCountBosses+=2; //Example Mod has 2 bosses, so increase the total boss count by 2
 		}
 
 		public static void ModSupportAntiaris() //The Antiaris
@@ -96,31 +100,30 @@ namespace RegenFromBosses
 			tempSlainBosses+=(
 			(CalamityMod.CalamityWorld.downedDesertScourge      ? 1 : 0) + //Desert Scourge
 			(CalamityMod.CalamityWorld.downedCrabulon           ? 1 : 0) + //Crabulon
-			((CalamityMod.CalamityWorld.downedHiveMind ||                    //Hive Mind and/or Perforator
-			CalamityMod.CalamityWorld.downedPerforator)         ? 1 : 0) + //Hive Mind and/or Perforator
+			((CalamityMod.CalamityWorld.downedHiveMind ||                  //Hive Mind / Perforator
+			CalamityMod.CalamityWorld.downedPerforator)         ? 1 : 0) + //Hive Mind / Perforator
 			(CalamityMod.CalamityWorld.downedSlimeGod           ? 1 : 0) + //Slime God
-			(CalamityMod.CalamityWorld.downedBrimstoneElemental ? 1 : 0) + //Brimstone Elemental
 			(CalamityMod.CalamityWorld.downedCryogen            ? 1 : 0) + //Cryogen
+			(CalamityMod.CalamityWorld.downedBrimstoneElemental ? 1 : 0) + //Brimstone Elemental
 			(CalamityMod.CalamityWorld.downedAquaticScourge     ? 1 : 0) + //Aquatic Scourge
 			(CalamityMod.CalamityWorld.downedCalamitas          ? 1 : 0) + //Calamitas
 			(CalamityMod.CalamityWorld.downedLeviathan          ? 1 : 0) + //Leviathan
-			(CalamityMod.CalamityWorld.downedAstrageldon        ? 1 : 0) + //Astrageldon Slime
-			//(CalamityMod.CalamityWorld.downedAstrumDeus???      ? 1 : 0) + //Astrum Deus
+			(CalamityMod.CalamityWorld.downedAstrageldon        ? 1 : 0) + //Astrum Aureus
+			(CalamityMod.CalamityWorld.downedStarGod            ? 1 : 0) + //Astrum Deus
 			(CalamityMod.CalamityWorld.downedPlaguebringer      ? 1 : 0) + //Plaguebringer Goliath
-			//(CalamityMod.CalamityWorld.downedRavager???         ? 1 : 0) + //Ravager
+			(CalamityMod.CalamityWorld.downedScavenger          ? 1 : 0) + //Ravager
 			(CalamityMod.CalamityWorld.downedGuardians          ? 1 : 0) + //Profaned Guardians
 			(CalamityMod.CalamityWorld.downedProvidence         ? 1 : 0) + //Providence
-			//(CalamityMod.CalamityWorld.downedCeaselessVoid???   ? 1 : 0) + //Ceaseless Void
-			//(CalamityMod.CalamityWorld.downedStormWorm???       ? 1 : 0) + //Storm Weaver
-			//(CalamityMod.CalamityWorld.downedSignus???          ? 1 : 0) + //Signus
+			(CalamityMod.CalamityWorld.downedSentinel1          ? 1 : 0) + //Ceaseless Void
+			(CalamityMod.CalamityWorld.downedSentinel2          ? 1 : 0) + //Storm Weaver
+			(CalamityMod.CalamityWorld.downedSentinel3          ? 1 : 0) + //Signus
 			(CalamityMod.CalamityWorld.downedPolterghast        ? 1 : 0) + //Polterghast
 			(CalamityMod.CalamityWorld.downedDoG                ? 1 : 0) + //Devourer of Gods
 			(CalamityMod.CalamityWorld.downedBumble             ? 1 : 0) + //Bumblebirb
-			(CalamityMod.CalamityWorld.downedYharon             ? 1 : 0)   //Yharon
-			//(CalamityMod.CalamityWorld.downedSupremeCalamitas??? ? 1 : 0)  //Supreme Calamitas
+			(CalamityMod.CalamityWorld.downedYharon             ? 1 : 0) + //Yharon
+			(CalamityMod.CalamityWorld.downedSCal               ? 1 : 0)   //Supreme Calamitas
 			);
-			//tempCountBosses+=23;
-			tempCountBosses+=17;
+			tempCountBosses+=23;
 		}
 
 		public static void ModSupportCrystiliumMod() //Crystilium
@@ -177,29 +180,31 @@ namespace RegenFromBosses
 			(Redemption.RedeWorld.downedTheKeeper       ? 1 : 0) + //The Keeper
 			(Redemption.RedeWorld.downedXenomiteCrystal ? 1 : 0) + //Xenomite Crystal
 			(Redemption.RedeWorld.downedInfectedEye     ? 1 : 0) + //Infected Eye
+			(Redemption.RedeWorld.downedIBehemoth       ? 1 : 0) + //Abandoned Lab
 			(Redemption.RedeWorld.downedSlayer          ? 1 : 0) + //King Slayer III
-			(Redemption.RedeWorld.downedVlitch1         ? 1 : 0) + //Vlitch Cleaver
-			(Redemption.RedeWorld.downedVlitch2         ? 1 : 0)   //Vlitch Gigipede
+			(Redemption.RedeWorld.downedVlitch1         ? 1 : 0) + //1st Vlitch Overlord
+			(Redemption.RedeWorld.downedVlitch2         ? 1 : 0) + //2nd Vlitch Overlord
+			(Redemption.RedeWorld.downedVlitch3         ? 1 : 0) + //3rd Vlitch Overlord
+			(Redemption.RedeWorld.downedPatientZero     ? 1 : 0)   //Patient Zero
 			);
-			tempCountBosses+=6;
+			tempCountBosses+=9;
 		}
 
 		public static void ModSupportSpiritMod() //Spirit Mod
 		{
 			tempSlainBosses+=(
 			(SpiritMod.MyWorld.downedScarabeus        ? 1 : 0) + //Scarabeus
-			//(SpiritMod.MyWorld.downedVinewrathBane??? ? 1 : 0) + //Vinewrath Bane
+			(SpiritMod.MyWorld.downedReachBoss        ? 1 : 0) + //Vinewrath Bane
 			(SpiritMod.MyWorld.downedAncientFlier     ? 1 : 0) + //Ancient Flier
-			(SpiritMod.MyWorld.downedRaider           ? 1 : 0) + //Starplate Raider???
+			(SpiritMod.MyWorld.downedRaider           ? 1 : 0) + //Starplate Raider
 			(SpiritMod.MyWorld.downedInfernon         ? 1 : 0) + //Infernon
 			(SpiritMod.MyWorld.downedDusking          ? 1 : 0) + //Dusking
-			//(SpiritMod.MyWorld.downedEtherealUmbra??? ? 1 : 0) + //Ethereal Umbra
+			(SpiritMod.MyWorld.downedSpiritCore       ? 1 : 0) + //Ethereal Umbra
 			(SpiritMod.MyWorld.downedIlluminantMaster ? 1 : 0) + //Illuminant Master
 			(SpiritMod.MyWorld.downedAtlas            ? 1 : 0) + //Atlas
 			(SpiritMod.MyWorld.downedOverseer         ? 1 : 0)   //Overseer
 			);
-			//tempCountBosses+=10;
-			tempCountBosses+=8;
+			tempCountBosses+=10;
 		}
 
 		public static void ModSupportThoriumMod() //Thorium Mod
@@ -207,7 +212,7 @@ namespace RegenFromBosses
 			tempSlainBosses+=(
 			(ThoriumMod.ThoriumWorld.downedThunderBird    ? 1 : 0) + //The Grand Thunder Bird
 			(ThoriumMod.ThoriumWorld.downedJelly          ? 1 : 0) + //The Queen Jellyfish
-			//(ThoriumMod.ThoriumWorld.downedViscount???    ? 1 : 0) + //Viscount
+			(ThoriumMod.ThoriumWorld.downedBat            ? 1 : 0) + //Viscount
 			(ThoriumMod.ThoriumWorld.downedStorm          ? 1 : 0) + //Granite Energy Storm
 			(ThoriumMod.ThoriumWorld.downedChampion       ? 1 : 0) + //The Buried Champion
 			(ThoriumMod.ThoriumWorld.downedScout          ? 1 : 0) + //The Star Scouter
@@ -217,45 +222,55 @@ namespace RegenFromBosses
 			(ThoriumMod.ThoriumWorld.downedDepthBoss      ? 1 : 0) + //Abyssion, The Forgotten One
 			(ThoriumMod.ThoriumWorld.downedRealityBreaker ? 1 : 0)   //The Ragnarok
 			);
-			//tempCountBosses+=11;
-			tempCountBosses+=10;
+			tempCountBosses+=11;
 		}
 
-		//I don't know what the array values for each boss are, and I don't want to just guess, so this is commented out for now
-		/*public static void ModSupportTremor() //Tremor Mod Remastered
+		public static void ModSupportTremor() //Tremor Mod Remastered
 		{
 			tempSlainBosses+=(
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Rukh
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Tiki Totem
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Evil Corn
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Storm Jellyfish
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Ancient Dragon
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Fungus Beetle
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Heater of Worlds
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Alchemaster
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Motherboard
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Pixie Queen
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Wall of Shadows
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Frost King
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Cog Lord
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Mothership and Cyber King
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //The Dark Emperor
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Brutallisk
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //Space Whale
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0) + //The Trinity
-			(Tremor.TremorWorld.downedBoss[???] ? 1 : 0)   //Andas
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.Rukh]           ? 1 : 0) + //Rukh
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.TikiTotem]      ? 1 : 0) + //Tiki Totem
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.EvilCorn]       ? 1 : 0) + //Evil Corn
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.StormJellyfish] ? 1 : 0) + //Storm Jellyfish
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.AncientDragon]  ? 1 : 0) + //Ancient Dragon
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.HeaterofWorlds] ? 1 : 0) + //Heater of Worlds
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.FungusBeetle]   ? 1 : 0) + //Fungus Beetle
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.Alchemaster]    ? 1 : 0) + //Alchemaster
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.Motherboard]    ? 1 : 0) + //Motherboard (Destroyer alt)
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.PixieQueen]     ? 1 : 0) + //Pixie Queen
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.FrostKing]      ? 1 : 0) + //Frost King
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.WallOfShadow]   ? 1 : 0) + //Wall of Shadows
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.CogLord]        ? 1 : 0) + //Cog Lord
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.CyberKing]      ? 1 : 0) + //Mothership and Cyber King
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.DarkEmperor]    ? 1 : 0) + //The Dark Emperor
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.Brutallisk]     ? 1 : 0) + //Brutallisk
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.SpaceWhale]     ? 1 : 0) + //Space Whale
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.Trinity]        ? 1 : 0) + //The Trinity
+			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.Andas]          ? 1 : 0)   //Andas
 			);
 			tempCountBosses+=19;
-		}*/
+		}
+
+		public static void ModSupportVaria() //Varia (Open Beta)
+		{
+			tempSlainBosses+=(
+			(Varia.VariaWorld.downedSotG        ? 1 : 0) + //Soul of the Guide
+			(Varia.VariaWorld.downedSpoderQueen ? 1 : 0) + //Spider Queen
+			(Varia.VariaWorld.downedAngel       ? 1 : 0) + //Fallen Angel
+			(Varia.VariaWorld.downedOptime      ? 1 : 0) + //Nice Guy
+			(Varia.VariaWorld.downedAnomaly     ? 1 : 0)   //The Anomaly
+			);
+			tempCountBosses+=5;
+		}
 
 		public static void ModSupportW1KModRedux() //W1K's Mod Redux
 		{
 			tempSlainBosses+=(
 			(W1KModRedux.MWorld.downedKutKu    ? 1 : 0) + //Yian Kut-Ku
 			(W1KModRedux.MWorld.downedIvy      ? 1 : 0) + //Ivy Plant
-			(W1KModRedux.MWorld.downedAquatix  ? 1 : 0) + //Aquatix
-			(W1KModRedux.MWorld.downedArborix  ? 1 : 0) + //Arborix
 			(W1KModRedux.MWorld.downedArdorix  ? 1 : 0) + //Ardorix
+			(W1KModRedux.MWorld.downedArborix  ? 1 : 0) + //Arborix
+			(W1KModRedux.MWorld.downedAquatix  ? 1 : 0) + //Aquatix
 			(W1KModRedux.MWorld.downedRidley   ? 1 : 0) + //Ridley
 			(W1KModRedux.MWorld.downedRathalos ? 1 : 0) + //Rathalos
 			(W1KModRedux.MWorld.downedOkiku    ? 1 : 0) + //Okiku

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 //It has a function that sends regenLife from the server to all clients (NetSendRegen()),
 //and a function that lets clients ask the server to do the above (NetGetRegen())
 
-//Note that despite what this file is for, this mod's multiplayer synchronization compatibility is still completely unknown at the time
+//Note that despite what this file is for, this mod entirely prevents multiplayer play in the first place, and I don't know why
 
 namespace RegenFromBosses
 {

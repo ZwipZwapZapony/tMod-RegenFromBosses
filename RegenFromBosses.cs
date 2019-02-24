@@ -29,7 +29,7 @@ namespace RegenFromBosses
 		//public static int tempSlainEvents; //Slain mini-bosses
 		//public static int tempCountEvents; //Amount of mini-bosses
 
-		public static bool calculateRegen=false; //Whether or not to re-calculate the regeneration amount
+		public static bool calculateRegen=false; //Whether or not to re-calculate the regeneration amount this frame
 
 
 		//static bool modLoadedBossChecklist;  //Automatic high mod compatibility using Boss Checklist (except not yet)
@@ -65,7 +65,7 @@ namespace RegenFromBosses
 			else //If the configuration file didn't load successfully
 			{
 				configFile.Clear(); //Clear the configuration file, just in case...
-				configFile.Put("LifeFromBosses",20); //...add variables for the the life regeneration from bosses...
+				configFile.Put("LifeFromBosses",20); //...add values for the the life regeneration from bosses...
 				//configFile.Put("LifeFromMiniBosses",0); //...mini-bosses...
 				//configFile.Put("LifeFromEvents",0); //...and events...
 				configFile.Save(); //...and then save the default-values configuration file

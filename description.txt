@@ -4,27 +4,35 @@ This mod exists to make Squire's Great Helm and Valhalla Knight's Breastplate le
 
 This mod has a configuration file, which can be edited with a text editor, at -/Terraria/ModLoader/Mod Configs/RegenFromBosses.json
 
-While not fully tested, this mod should currently support bosses from the following:
+Unfortunately, this mod completely breaks multiplayer at the moment, and I don't know how to fix that.
+
+This mod should currently support bosses from the following:
 Terraria v1.3.5.2
 Example Mod v0.10.1.5
 The Antiaris v0.1.0.11
-Calamity Mod v1.3.4.1 (~70% supported)
+Calamity Mod (No Calamity Music) v1.4.1.4
 Crystilium v11.3.1.5
 Echoes of the Ancients v0.1.1
 Exodus Mod v1.1.0.1
-Ocram 'n Stuff v1.0.1.9
+Ocram 'n Stuff v1.0.2.4
 Pumpking's Mod v1.1.4.1
-Mod of Redemption v0.5.4
-Spirit Mod v1.3.4.1 (~80% supported)
-Thorium Mod v1.5.0.4 (All but one boss supported)
+Mod of Redemption v0.7
+Spirit Mod v1.3.4.1
+Tremor Mod Remastered v1.3.2.7
+Thorium Mod v1.5.1.2
+Varia (Open Beta) v1.0.5.1
 W1K's Mod Redux v1.1.1
 
 "Integration" with the Boss Checklist mod has been considered for wide automatic mod-boss support, but it seems impossible to me at the moment.
 
-Multiplayer compatibility/synchronization is currently unknown.
-
 
 Changelog:
+
+Version 2.1:
+- Added support for Tremor Mod Remastered and Varia (Open Beta)
+- Updated support for Calamity Mod (No Calamity Music), Mod of Redemption, Thorium Mod, and Spirit Mod
+- (All supported mods are now fully supported; No mods are only partially supported anymore)
+- No longer recalculates the life regeneration amount upon respawning. Considering that it recalculates it when slaying a boss or re-joining the world, that should be often enough.
 
 Version 2.0:
 - Life regeneration is now based on the percentage of bosses that have been slain
@@ -34,7 +42,7 @@ Version 2.0:
 - (The previous maximum from vanilla Terraria's bosses was 7 per second, so this is a slight buff if no more than 6 mod bosses are also added, but a nerf if so)
 - Partial rewrite and more restructuring of the source code
 - Some "debug" stuff is now displayed when calculating the regeneration if Modder's Toolkit is loaded
-- In theory, multiplayer synchronization has been improved much more, but it's still unknown whether it works or not in practice
+- In theory, multiplayer synchronization has been improved much more, but in practice, it has been completely destroyed
 
 Version 1.2:
 - Added full support for Mod of Redemption
