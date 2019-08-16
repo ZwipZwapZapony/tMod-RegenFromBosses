@@ -26,6 +26,10 @@ W1K's Mod Redux v1.1.1
 
 Changelog:
 
+Version 3.0.1:
+- Coloured the headers in the mod configuration menu for this mod, just to make it look prettier
+- Minor source code cleanup
+
 Version 3.0:
 - Updated to tModLoader 0.11+, and uses the ModConfig system introduced in it
 - (This means that any configuration from previous versions before 3.0 no longer applies, though the new method is more user-friendly)

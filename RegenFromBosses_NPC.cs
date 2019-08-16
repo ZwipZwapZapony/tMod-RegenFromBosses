@@ -1,5 +1,5 @@
-using Terraria;
-using Terraria.ModLoader;
+using Terraria; //For the NPC object type
+using Terraria.ModLoader; //For the GlobalNPC class type
 
 //This file simply makes the life regeneration amount get recalculated when a boss is slain
 

@@ -1,6 +1,5 @@
-using Terraria;
-using Terraria.ID; //For the NetmodeID constants
-using Terraria.ModLoader;
+using Terraria; //For the Player object type
+using Terraria.ModLoader; //For the ModPlayer class type
 
 //This file makes players regenerate some life as they should,
 //and asks the server for the life regeneration amount when joining a server
@@ -27,12 +26,9 @@ namespace RegenFromBosses
 
 		public override void OnEnterWorld(Player player) //When a player enters a world...
 		{
-			if (Main.netMode==NetmodeID.MultiplayerClient) //...if playing as a client on a server...
-			{
-				RegenFromBosses.regenLife=0; //...reset the local life regeneration value...
-				//RegenFromBosses.NetGetRegen(); //...and ask the server for it instead
-				RegenFromBosses.calculateRegen=true; //Actually, calculate it ourselves instead - I can't figure out manual synchronization yet, and the server synchronizes all variables needed for calculating it, so why not?
-			}
+			RegenFromBosses.regenLife=0; //...reset the local life regeneration value...
+			//RegenFromBosses.NetGetRegen(); //...and ask the server for it instead
+			RegenFromBosses.calculateRegen=true; //Actually, calculate it ourselves instead - I can't figure out manual synchronization yet, and the server synchronizes all variables needed for calculating it, so why not?
 		}
 	}
 }

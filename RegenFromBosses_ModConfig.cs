@@ -1,9 +1,8 @@
-using Newtonsoft.Json; //Needed for the "[JsonIgnore]" attribute for ModConfig support
-using System.ComponentModel; //Needed for other attributes (e.g. "[DefaultValue(...)]") for ModConfig support
-using Terraria;
+using Newtonsoft.Json; //For the "[JsonIgnore]" attribute for ModConfig support
+using System.ComponentModel; //For other attributes (e.g. "[DefaultValue(...)]") for ModConfig support
+using Terraria; //For checking whether one is playing singleplayer, hosting a server, or a client on a server
 using Terraria.ID; //For the NetmodeID constants
-using Terraria.ModLoader;
-using Terraria.ModLoader.Config; //Needed for ModConfig support
+using Terraria.ModLoader.Config; //For ModConfig support
 
 //This file handles ModConfig support
 //It allows you to set the maximum amount of life regeneration from having beaten all bosses in the current world,
@@ -21,7 +20,7 @@ namespace RegenFromBosses
 			//Config_ServerSide.Instance=this; //...so, therefore, do it manually!
 		//}
 
-		[Header("Maximum Life Regeneration Per Second")] //Add a header
+		[Header("[c/FF92A9:Maximum Life Regeneration Per Second]")] //Add a header
 
 		[DefaultValue(10)] //Set the default to 10 life per second
 		[Label("Maximum Life Regeneration from Bosses")] //Label the slider intuitively //TODO Figure out how to display the value divided by 2, then double the slider
@@ -60,7 +59,7 @@ namespace RegenFromBosses
 		[Tooltip("Default: 10\nThe potential amount of life regeneration per second\nwhen all bosses, mini-bosses, and events have all been slain.")] //Set a descriptive tooltip
 		public int config__MaxLifeRegen=>(configLifeFromBosses+configLifeFromMiniBosses+configLifeFromEvents+configLifePassive); //Add an auto-calculated value box
 
-		[Header("Maximum Mana Regeneration Per Second")] //Add a header
+		[Header("[c/92A9FF:Maximum Mana Regeneration Per Second]")] //Add a header
 
 		[DefaultValue(0)] //Set the default to 10 mana per second
 		[Label("Maximum Mana Regeneration from Bosses")] //Label the slider intuitively //TODO Figure out how to display the value divided by 2, then double the slider
@@ -99,7 +98,7 @@ namespace RegenFromBosses
 		[Tooltip("Default: 0\nThe potential amount of mana regeneration per second\nwhen all bosses, mini-bosses, and events have all been slain.")] //Set a descriptive tooltip
 		public int config__MaxManaRegen=>(configManaFromBosses+configManaFromMiniBosses+configManaFromEvents+configManaPassive); //Add an auto-calculated value box
 
-		[Header("Other Options")] //Add a header
+		[Header("[c/A9FF92:Other Options]")] //Add a header
 
 		[DefaultValue(100)] //Set the default to 100
 		[Label("Life Regeneration Stacks With Other Sources (%)")] //Label the option intuitively //TODO Figure out how to add the % sign -after- the value

@@ -1,6 +1,4 @@
-using Terraria;
-using Terraria.ID; //For the NetmodeID constants
-using Terraria.ModLoader;
+using Terraria.ModLoader; //For the ModWorld class type
 
 //This file makes sure that the life regeneration is re-calculated when loading a world,
 //as well as when other files say that it should be re-calculated

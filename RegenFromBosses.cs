@@ -1,6 +1,3 @@
-using System.IO; //For configuration file reading/writing
-using Terraria;
-using Terraria.IO; //For configuration file reading/writing
 using Terraria.ModLoader;
 
 //This file is for the "main" stuff as well as stuff not handled in other files
