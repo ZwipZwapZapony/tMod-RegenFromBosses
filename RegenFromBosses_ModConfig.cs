@@ -28,7 +28,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(230,10,57)] //Make the slider Heart-coloured
 		[Tooltip("Default: 10\nThe amount of life regeneration per second\nwhen all bosses have been slain.\n\nScales linearly between 0 and this amount\nif only some of the bosses have been slain.")] //Set a descriptive tooltip
-		public int configLifeFromBosses; //Add a slider for the amount of life per second from bosses
+		public int configLifeFromBosses{get;set;} //Add a slider for the amount of life per second from bosses
 
 		[DefaultValue(0)] //Set the default to 0 life per second
 		[Label("Maximum Life Regeneration from Mini-Bosses")] //Label the slider intuitively
@@ -36,7 +36,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(230,10,57)] //Make the slider Heart-coloured
 		[Tooltip("Default: 0\nThe amount of life regeneration per second\nwhen all mini-bosses have been slain.\n\nScales linearly between 0 and this amount\nif only some of the mini-bosses have been slain.")] //Set a descriptive tooltip
-		public int configLifeFromMiniBosses; //Add a slider for the amount of life per second from mini-bosses
+		public int configLifeFromMiniBosses{get;set;} //Add a slider for the amount of life per second from mini-bosses
 
 		[DefaultValue(0)] //Set the default to 0 life per second
 		[Label("Maximum Life Regeneration from Events")] //Label the slider intuitively
@@ -44,7 +44,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(230,10,57)] //Make the slider Heart-coloured
 		[Tooltip("Default: 0\nThe amount of life regeneration per second\nwhen all events have been slain.\n\nScales linearly between 0 and this amount\nif only some of the events have been slain.")] //Set a descriptive tooltip
-		public int configLifeFromEvents; //Add a slider for the amount of life per second from events
+		public int configLifeFromEvents{get;set;} //Add a slider for the amount of life per second from events
 
 		[DefaultValue(0)] //Set the default to 10 life per second
 		[Label("Additional Passive Flat Extra Life Regeneration")] //Label the slider intuitively //TODO Figure out how to display the value divided by 2, then double the slider
@@ -52,7 +52,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(230,10,57)] //Make the slider Heart-coloured
 		[Tooltip("Default: 0\nAn extra amount of life regeneration per second,\nwhich is always active, regardless of whether or not\nany bosses, mini-bosses, or events have been slain,\nand also regardless of how many have been slain if so.")] //Set a descriptive tooltip
-		public int configLifePassive; //Add a slider for the amount of passive life per second
+		public int configLifePassive{get;set;} //Add a slider for the amount of passive life per second
 
 		[JsonIgnore] //Prevent the following from being saved in the configuration file
 		[Label("Total Maximum Life Regeneration")] //Label the auto-value intuitively
@@ -67,7 +67,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(11,61,245)] //Make the slider Star-coloured
 		[Tooltip("Default: 0\nThe amount of mana regeneration per second\nwhen all bosses have been slain.\n\nScales linearly between 0 and this amount\nif only some of the bosses have been slain.")] //Set a descriptive tooltip
-		public int configManaFromBosses; //Add a slider for the amount of mana per second from bosses
+		public int configManaFromBosses{get;set;} //Add a slider for the amount of mana per second from bosses
 
 		[DefaultValue(0)] //Set the default to 0 mana per second
 		[Label("Maximum Mana Regeneration from Mini-Bosses")] //Label the slider intuitively
@@ -75,7 +75,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(11,61,245)] //Make the slider Star-coloured
 		[Tooltip("Default: 0\nThe amount of mana regeneration per second\nwhen all mini-bosses have been slain.\n\nScales linearly between 0 and this amount\nif only some of the mini-bosses have been slain.")] //Set a descriptive tooltip
-		public int configManaFromMiniBosses; //Add a slider for the amount of mana per second from mini-bosses
+		public int configManaFromMiniBosses{get;set;} //Add a slider for the amount of mana per second from mini-bosses
 
 		[DefaultValue(0)] //Set the default to 0 mana per second
 		[Label("Maximum Mana Regeneration from Events")] //Label the slider intuitively
@@ -83,7 +83,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(11,61,245)] //Make the slider Star-coloured
 		[Tooltip("Default: 0\nThe amount of mana regeneration per second\nwhen all events have been slain.\n\nScales linearly between 0 and this amount\nif only some of the events have been slain.")] //Set a descriptive tooltip
-		public int configManaFromEvents; //Add a slider for the amount of mana per second from events
+		public int configManaFromEvents{get;set;} //Add a slider for the amount of mana per second from events
 
 		[DefaultValue(0)] //Set the default to 10 mana per second
 		[Label("Additional Passive Flat Extra Mana Regeneration")] //Label the slider intuitively //TODO Figure out how to display the value divided by 2, then double the slider
@@ -91,7 +91,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(11,61,245)] //Make the slider Star-coloured
 		[Tooltip("Default: 0\nAn extra amount of mana regeneration per second,\nwhich is always active, regardless of whether or not\nany bosses, mini-bosses, or events have been slain,\nand also regardless of how many have been slain if so.")] //Set a descriptive tooltip
-		public int configManaPassive; //Add a slider for the amount of passive mana per second
+		public int configManaPassive{get;set;} //Add a slider for the amount of passive mana per second
 
 		[JsonIgnore] //Prevent the following from being saved in the configuration file
 		[Label("Total Maximum Mana Regeneration")] //Label the auto-value intuitively
@@ -106,7 +106,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(230,10,57)] //Make the slider Heart-coloured
 		[Tooltip("Default: 100%\nAt 100%, life regeneration from this mod will add on top of\nlife regeneration from other sources (natural life regeneration,\narmour/buffs that regenerate life, et cetera).\n\nAt 0%, you will only regenerate the higher value of\nlife regeneration from this mod and from other sources.\n\nScales linearly between the two when neither 100% nor 0%.")] //Set a descriptive tooltip
-		public int configLifeRegenStacks; //Add a slider for how much this mod's life regeneration stacks with other sources
+		public int configLifeRegenStacks{get;set;} //Add a slider for how much this mod's life regeneration stacks with other sources
 
 		[DefaultValue(100)] //Set the default to 100
 		[Label("Mana Regeneration Stacks With Other Sources (%)")] //Label the option intuitively //TODO Figure out how to add the % sign -after- the value
@@ -114,7 +114,7 @@ namespace RegenFromBosses
 		[Slider] //Make sure that it's an intuitive slider, not a number input box
 		[SliderColor(11,61,245)] //Make the slider Star-coloured
 		[Tooltip("Default: 100%\nAt 100%, mana regeneration from this mod will add on top of\nmana regeneration from other sources (natural mana regeneration,\narmour/buffs that regenerate mana, et cetera).\n\nAt 0%, you will only regenerate the higher value of\nmana regeneration from this mod and from other sources.\n\nScales linearly between the two when neither 100% nor 0%.")] //Set a descriptive tooltip
-		public int configManaRegenStacks; //Add a slider for how much this mod's life regeneration stacks with other sources
+		public int configManaRegenStacks{get;set;} //Add a slider for how much this mod's life regeneration stacks with other sources
 
 		public override bool AcceptClientChanges(ModConfig pendingConfig,int whoAmI,ref string message) //Deny multiplayer clients from changing Regen From Bosses' configuration
 		{

@@ -26,6 +26,9 @@ W1K's Mod Redux v1.1.1
 
 Changelog:
 
+Version 3.0.2:
+- Fixed two "sums" in the mod configuration menu being listed at wrong places in the menu
+
 Version 3.0.1:
 - Coloured the headers in the mod configuration menu for this mod, just to make it look prettier
 - Minor source code cleanup
