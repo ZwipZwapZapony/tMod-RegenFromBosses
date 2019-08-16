@@ -1,16 +1,14 @@
 Regen From Bosses makes your character regenerate some life per second, based on the amount of bosses that you have slain at least once in a world.
 
-This mod exists to make Squire's Great Helm and Valhalla Knight's Breastplate less essential for people who don't want to use consumable health potions, although this mod does stack with those items.
+This mod exists to make Squire's Great Helm and Valhalla Knight's Breastplate less essential for people who don't want to use consumable health potions, although this mod can stack with those items.
 
-This mod has a configuration file, which can be edited with a text editor, at -/Terraria/ModLoader/Mod Configs/RegenFromBosses.json
-
-Unfortunately, this mod completely breaks multiplayer at the moment, and I don't know how to fix that.
+This mod seems to have no effect in multiplayer - I don't know why.
 
 This mod should currently support bosses from the following:
 Terraria v1.3.5.2
-Example Mod v0.10.1.5
+Example Mod v0.11.3
 The Antiaris v0.1.0.11
-Calamity Mod (No Calamity Music) v1.4.1.4
+Calamity Mod (No Calamity Music) v1.4.2.103
 Crystilium v11.3.1.5
 Echoes of the Ancients v0.1.1
 Exodus Mod v1.1.0.1
@@ -27,6 +25,15 @@ W1K's Mod Redux v1.1.1
 
 
 Changelog:
+
+Version 3.0:
+- Updated to tModLoader 0.11+, and uses the ModConfig system introduced in it
+- (This means that any configuration from previous versions before 3.0 no longer applies, though the new method is more user-friendly)
+- You can now adjust how much maximum life regeneration you can obtain by slaying all bosses/mini-bosses/events in a world, and how much it stacks with life regeneration from other sources, within the game
+- Now supports additional life regeneration for slaying mini-bosses and events, as well as an always-active passive bonus, although none of those things are enabled by default (though they can be configured in-game)
+- You can now also make it so that this mod gives you some extra mana regeneration. This is also disabled by default... but you can configure it if you really want to, because "why not". This is not tested yet
+- No longer hangs in multiplayer... but based on one-player tests, doesn't seem to have any effect in it, anyway... So, multiplayer is still not supported, but at least playable now?
+- Updated support for Calamity Mod (No Calamity Music)
 
 Version 2.1:
 - Added support for Tremor Mod Remastered and Varia (Open Beta)

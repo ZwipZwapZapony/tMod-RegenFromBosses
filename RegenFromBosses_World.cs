@@ -20,8 +20,7 @@ namespace RegenFromBosses
 			if (RegenFromBosses.calculateRegen==true) //...if regeneration is to be recalculated...
 			{
 				RegenFromBosses.calculateRegen=false; //...make sure that we don't recalculate it the next frame...
-				if (Main.netMode!=NetmodeID.MultiplayerClient) //...and then, if playing in singleplayer or hosting the server...
-					RegenFromBosses.CalculateRegen(); //...recalculate the regeneration - See the RegenFromBosses_CalculateRegen.cs file
+				RegenFromBosses.CalculateRegen(); //...and recalculate the regeneration - See the RegenFromBosses_CalculateRegen.cs file
 			}
 		}
 	}

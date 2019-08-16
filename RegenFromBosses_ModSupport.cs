@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 //This file handles hardcoded support for mods' bosses
-//If Boss Checklist is loaded, nothing in this file will do anything important
+//If Boss Checklist is loaded, nothing in this file will do anything important (except not yet)
 
 namespace RegenFromBosses
 {
@@ -98,30 +98,30 @@ namespace RegenFromBosses
 		public static void ModSupportCalamityMod() //Calamity Mod
 		{
 			tempSlainBosses+=(
-			(CalamityMod.CalamityWorld.downedDesertScourge      ? 1 : 0) + //Desert Scourge
-			(CalamityMod.CalamityWorld.downedCrabulon           ? 1 : 0) + //Crabulon
-			((CalamityMod.CalamityWorld.downedHiveMind ||                  //Hive Mind / Perforator
-			CalamityMod.CalamityWorld.downedPerforator)         ? 1 : 0) + //Hive Mind / Perforator
-			(CalamityMod.CalamityWorld.downedSlimeGod           ? 1 : 0) + //Slime God
-			(CalamityMod.CalamityWorld.downedCryogen            ? 1 : 0) + //Cryogen
-			(CalamityMod.CalamityWorld.downedBrimstoneElemental ? 1 : 0) + //Brimstone Elemental
-			(CalamityMod.CalamityWorld.downedAquaticScourge     ? 1 : 0) + //Aquatic Scourge
-			(CalamityMod.CalamityWorld.downedCalamitas          ? 1 : 0) + //Calamitas
-			(CalamityMod.CalamityWorld.downedLeviathan          ? 1 : 0) + //Leviathan
-			(CalamityMod.CalamityWorld.downedAstrageldon        ? 1 : 0) + //Astrum Aureus
-			(CalamityMod.CalamityWorld.downedStarGod            ? 1 : 0) + //Astrum Deus
-			(CalamityMod.CalamityWorld.downedPlaguebringer      ? 1 : 0) + //Plaguebringer Goliath
-			(CalamityMod.CalamityWorld.downedScavenger          ? 1 : 0) + //Ravager
-			(CalamityMod.CalamityWorld.downedGuardians          ? 1 : 0) + //Profaned Guardians
-			(CalamityMod.CalamityWorld.downedProvidence         ? 1 : 0) + //Providence
-			(CalamityMod.CalamityWorld.downedSentinel1          ? 1 : 0) + //Ceaseless Void
-			(CalamityMod.CalamityWorld.downedSentinel2          ? 1 : 0) + //Storm Weaver
-			(CalamityMod.CalamityWorld.downedSentinel3          ? 1 : 0) + //Signus
-			(CalamityMod.CalamityWorld.downedPolterghast        ? 1 : 0) + //Polterghast
-			(CalamityMod.CalamityWorld.downedDoG                ? 1 : 0) + //Devourer of Gods
-			(CalamityMod.CalamityWorld.downedBumble             ? 1 : 0) + //Bumblebirb
-			(CalamityMod.CalamityWorld.downedYharon             ? 1 : 0) + //Yharon
-			(CalamityMod.CalamityWorld.downedSCal               ? 1 : 0)   //Supreme Calamitas
+			(CalamityMod.World.CalamityWorld.downedDesertScourge      ? 1 : 0) + //Desert Scourge
+			(CalamityMod.World.CalamityWorld.downedCrabulon           ? 1 : 0) + //Crabulon
+			((CalamityMod.World.CalamityWorld.downedHiveMind ||                  //Hive Mind / Perforator
+			CalamityMod.World.CalamityWorld.downedPerforator)         ? 1 : 0) + //Hive Mind / Perforator
+			(CalamityMod.World.CalamityWorld.downedSlimeGod           ? 1 : 0) + //Slime God
+			(CalamityMod.World.CalamityWorld.downedCryogen            ? 1 : 0) + //Cryogen
+			(CalamityMod.World.CalamityWorld.downedBrimstoneElemental ? 1 : 0) + //Brimstone Elemental
+			(CalamityMod.World.CalamityWorld.downedAquaticScourge     ? 1 : 0) + //Aquatic Scourge
+			(CalamityMod.World.CalamityWorld.downedCalamitas          ? 1 : 0) + //Calamitas
+			(CalamityMod.World.CalamityWorld.downedLeviathan          ? 1 : 0) + //Leviathan
+			(CalamityMod.World.CalamityWorld.downedAstrageldon        ? 1 : 0) + //Astrum Aureus
+			(CalamityMod.World.CalamityWorld.downedStarGod            ? 1 : 0) + //Astrum Deus
+			(CalamityMod.World.CalamityWorld.downedPlaguebringer      ? 1 : 0) + //Plaguebringer Goliath
+			(CalamityMod.World.CalamityWorld.downedScavenger          ? 1 : 0) + //Ravager
+			(CalamityMod.World.CalamityWorld.downedGuardians          ? 1 : 0) + //Profaned Guardians
+			(CalamityMod.World.CalamityWorld.downedProvidence         ? 1 : 0) + //Providence
+			(CalamityMod.World.CalamityWorld.downedSentinel1          ? 1 : 0) + //Ceaseless Void
+			(CalamityMod.World.CalamityWorld.downedSentinel2          ? 1 : 0) + //Storm Weaver
+			(CalamityMod.World.CalamityWorld.downedSentinel3          ? 1 : 0) + //Signus
+			(CalamityMod.World.CalamityWorld.downedPolterghast        ? 1 : 0) + //Polterghast
+			(CalamityMod.World.CalamityWorld.downedDoG                ? 1 : 0) + //Devourer of Gods
+			(CalamityMod.World.CalamityWorld.downedBumble             ? 1 : 0) + //Bumblebirb
+			(CalamityMod.World.CalamityWorld.downedYharon             ? 1 : 0) + //Yharon
+			(CalamityMod.World.CalamityWorld.downedSCal               ? 1 : 0)   //Supreme Calamitas
 			);
 			tempCountBosses+=23;
 		}
