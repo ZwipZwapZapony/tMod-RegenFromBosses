@@ -34,11 +34,6 @@ namespace RegenFromBosses
 				Load__HardcodedModSupport(); //Load other hardcoded mods - See the RegenFromBosses_ModSupport.cs file
 		}
 
-		public override void Unload() //We need to help unload some stuff manually
-		{
-			Config_ServerSide.Instance=null; //We can't have a static reference to... something inside this mod, even though this mod is already being unloaded? This line takes care of that
-		}
-
 		public override object Call(params object[] input) //Allow other mods to manually make this mod recalculate the regeneration amount with a Call
 		{
 			if (input[0]=="CalculateRegen")
