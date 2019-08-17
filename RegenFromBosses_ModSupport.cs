@@ -88,6 +88,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportAntiaris() //The Antiaris
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(Antiaris.AntiarisWorld.DownedAntlionQueen ? 1 : 0) + //Antlion Queen
 			(Antiaris.AntiarisWorld.DownedTowerKeeper  ? 1 : 0)   //Tower Keeper
@@ -97,6 +98,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportCalamityMod() //Calamity Mod
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(CalamityMod.World.CalamityWorld.downedDesertScourge      ? 1 : 0) + //Desert Scourge
 			(CalamityMod.World.CalamityWorld.downedCrabulon           ? 1 : 0) + //Crabulon
@@ -128,6 +130,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportCrystiliumMod() //Crystilium
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(CrystiliumMod.CrystalWorld.downedCrystalKing ? 1 : 0) //Crystal King
 			);
@@ -136,6 +139,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportEchoesoftheAncients() //Echoes of the Ancients
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(EchoesoftheAncients.AncientWorld.downedWyrms ? 1 : 0) //Creation and Destruction
 			);
@@ -144,6 +148,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportExodus() //Exodus Mod
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(Exodus.ExodusWorld.downedExodusAbomination   ? 1 : 0) + //Abomination
 			(Exodus.ExodusWorld.downedExodusEvilBlob      ? 1 : 0) + //Evil Blob
@@ -159,6 +164,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportOcram() //Ocram 'n Stuff
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(Ocram.OcramWorld.downedOcram ? 1 : 0) //Ocram
 			);
@@ -167,6 +173,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportPumpking() //Pumpking's Mod
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(Pumpking.PumpkingWorld.downedPumpkingHorseman ? 1 : 0) + //Pumpking Horseman
 			(Pumpking.PumpkingWorld.downedTerraLord        ? 1 : 0)   //Terra Lord
@@ -176,22 +183,42 @@ namespace RegenFromBosses
 
 		public static void ModSupportRedemption() //Mod of Redemption
 		{
+			//Bosses
 			tempSlainBosses+=(
-			(Redemption.RedeWorld.downedTheKeeper       ? 1 : 0) + //The Keeper
-			(Redemption.RedeWorld.downedXenomiteCrystal ? 1 : 0) + //Xenomite Crystal
-			(Redemption.RedeWorld.downedInfectedEye     ? 1 : 0) + //Infected Eye
-			(Redemption.RedeWorld.downedIBehemoth       ? 1 : 0) + //Abandoned Lab
-			(Redemption.RedeWorld.downedSlayer          ? 1 : 0) + //King Slayer III
-			(Redemption.RedeWorld.downedVlitch1         ? 1 : 0) + //1st Vlitch Overlord
-			(Redemption.RedeWorld.downedVlitch2         ? 1 : 0) + //2nd Vlitch Overlord
-			(Redemption.RedeWorld.downedVlitch3         ? 1 : 0) + //3rd Vlitch Overlord
-			(Redemption.RedeWorld.downedPatientZero     ? 1 : 0)   //Patient Zero
+			(Redemption.RedeWorld.downedThorn             ? 1 : 0) + //Thorn, Bane of the Forest
+			(Redemption.RedeWorld.downedTheKeeper         ? 1 : 0) + //The Keeper
+			(Redemption.RedeWorld.downedXenomiteCrystal   ? 1 : 0) + //Xenomite Crystal
+			(Redemption.RedeWorld.downedInfectedEye       ? 1 : 0) + //Infected Eye
+			(Redemption.RedeWorld.downedIBehemoth         ? 1 : 0) + //The Abandoned Lab
+			(Redemption.RedeWorld.downedSlayer            ? 1 : 0) + //King Slayer III
+			(Redemption.RedeWorld.downedVlitch1           ? 1 : 0) + //1st Vlitch Overlord
+			(Redemption.RedeWorld.downedVlitch2           ? 1 : 0) + //2nd Vlitch Overlord
+			(Redemption.RedeWorld.downedVlitch3           ? 1 : 0) + //3rd Vlitch Overlord
+			(Redemption.RedeWorld.downedPatientZero       ? 1 : 0) + //Patient Zero
+			(Redemption.RedeWorld.downedEaglecrestGolemPZ ? 1 : 0) + //Thorn & Eaglecrest Re[?]
+			(Redemption.RedeWorld.downedNebuleus          ? 1 : 0)   //Nebuleus, Angel of the Cosmos
 			);
-			tempCountBosses+=9;
+			tempCountBosses+=12;
+			//Mini-Bosses
+			tempSlainMiniBosses+=(
+			(Redemption.RedeWorld.downedKingChicken     ? 1 : 0) + //The Mighty King Chicken
+			(Redemption.RedeWorld.downedSunkenCaptain   ? 1 : 0) + //Sunken Captain
+			(Redemption.RedeWorld.downedSkullDigger     ? 1 : 0) + //Skull Digger
+			(Redemption.RedeWorld.downedStrangePortal   ? 1 : 0) + //Strange Portal
+			(Redemption.RedeWorld.downedEaglecrestGolem ? 1 : 0)   //Eaglecrest Golem
+			);
+			tempCountMiniBosses+=3;
+			//Events
+			tempSlainEvents+=(
+			(Redemption.RedeWorld.downedChickenInvPZ ? 1 : 0) + //Chicken Invasion
+			(Redemption.RedeWorld.downedChickenInvPZ ? 1 : 0)   //King Chicken's Royal A[?]
+			);
+			tempCountEvents+=2;
 		}
 
 		public static void ModSupportSpiritMod() //Spirit Mod
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(SpiritMod.MyWorld.downedScarabeus        ? 1 : 0) + //Scarabeus
 			(SpiritMod.MyWorld.downedReachBoss        ? 1 : 0) + //Vinewrath Bane
@@ -209,6 +236,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportThoriumMod() //Thorium Mod
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(ThoriumMod.ThoriumWorld.downedThunderBird    ? 1 : 0) + //The Grand Thunder Bird
 			(ThoriumMod.ThoriumWorld.downedJelly          ? 1 : 0) + //The Queen Jellyfish
@@ -227,6 +255,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportTremor() //Tremor Mod Remastered
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.Rukh]           ? 1 : 0) + //Rukh
 			(Tremor.TremorWorld.downedBoss[Tremor.TremorWorld.Boss.TikiTotem]      ? 1 : 0) + //Tiki Totem
@@ -253,6 +282,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportVaria() //Varia (Open Beta)
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(Varia.VariaWorld.downedSotG        ? 1 : 0) + //Soul of the Guide
 			(Varia.VariaWorld.downedSpoderQueen ? 1 : 0) + //Spider Queen
@@ -265,6 +295,7 @@ namespace RegenFromBosses
 
 		public static void ModSupportW1KModRedux() //W1K's Mod Redux
 		{
+			//Bosses
 			tempSlainBosses+=(
 			(W1KModRedux.MWorld.downedKutKu    ? 1 : 0) + //Yian Kut-Ku
 			(W1KModRedux.MWorld.downedIvy      ? 1 : 0) + //Ivy Plant
